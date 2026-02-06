@@ -27,7 +27,7 @@ namespace CodingTest.repository
             return new List<Coffee>(_coffees);
         }
 
-        public Coffee GetByCode(string code)
+        public Coffee GetCoffeeByCode(string code)
         {
             return _coffees.FirstOrDefault(c => c.Code == code);
         }
