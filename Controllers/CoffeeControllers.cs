@@ -29,7 +29,7 @@ namespace CodingTest.Controllers
         [HttpPost("v1/calculate")]
         public IActionResult Create([FromBody] ConsumptionRequest request)
         {
-            Console.WriteLine("POST HIT");
+            Console.WriteLine("APAREÇA");
             var result = _recommendationService.RecommendNextCoffee(request.Recommendations);
             return Ok(new { Recommendations = result });
         }
