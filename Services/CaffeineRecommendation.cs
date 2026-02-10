@@ -21,7 +21,33 @@ namespace CodingTest.Services
 
         public List<CoffeeRecommendationResult> RecommendNextCoffee(List<RecentCoffeeConsumption> recentConsumptions)
         {
-            return new List<CoffeeRecommendationResult>();
+            double totalActiveCaffeine = CalculateCurrentCafeine(recentConsumptions);
+
+            var coffees = _coffeeRepository.GetAll();
+            var recommendations = new List<CoffeeRecommendationResult>();
+
+            foreach (var coffee in coffees)
+            {
+                int wait = 0;
+                double simulatedCaffeine = totalActiveCaffeine;
+
+                while (simulatedCaffeine + coffee.CaffeineContentInMg >175)
+                {
+                    wait += 5;
+                    simulatedCaffeine = _caffeineCalculationService.CalculateHalfLife((int)totalActiveCaffeine, wait);
+                }
+
+                
+                recommendations.Add(new CoffeeRecommendationResult
+                {
+                    Code = coffee.Code,
+                    Name = coffee.Name,
+                    Wait = wait
+                });
+                
+            }
+
+            return recommendations;
         }
 
         private double CalculateCurrentCafeine(List<RecentCoffeeConsumption> consumptions)
@@ -38,6 +64,7 @@ namespace CodingTest.Services
 
             return totalActiveCaffeine;
         }
+
     }
 
     public class CoffeeRecommendationResult

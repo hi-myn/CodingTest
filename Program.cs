@@ -1,8 +1,17 @@
+using CodingTest.repository;
+using CodingTest.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddSingleton<CoffeeRepository>();
+builder.Services.AddSingleton<CaffeineCalculationService>();
+builder.Services.AddSingleton<CaffeineRecommendation>();
+
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -14,7 +23,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
